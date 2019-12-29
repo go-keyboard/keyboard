@@ -59,6 +59,7 @@ class PhysicalKeyboard {
   getSimpleKeyboardLayoutKey(event) {
     let output;
 
+    console.log(event);
     if (
       event.code.includes("Numpad") ||
       event.code.includes("Shift") ||

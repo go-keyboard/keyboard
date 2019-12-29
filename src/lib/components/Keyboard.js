@@ -664,6 +664,16 @@ class SimpleKeyboard {
    */
   handleKeyUp(event) {
     this.caretEventHandler(event);
+    let buttonPressed = this.physicalKeyboard.getSimpleKeyboardLayoutKey(event);
+    console.log(buttonPressed);
+    this.dispatch(instance => {
+      let buttonDOM = instance.getButtonElement(`{${buttonPressed}}`);
+      if (buttonDOM) {
+        this.handleButtonMouseUp("{" + buttonPressed + "}");
+      } else {
+        this.handleButtonMouseUp(buttonPressed);
+      }
+    });
 
     if (this.options.physicalKeyboardHighlight) {
       this.physicalKeyboard.handleHighlightKeyUp(event);
@@ -674,6 +684,18 @@ class SimpleKeyboard {
    * Event Handler: KeyDown
    */
   handleKeyDown(event) {
+    let buttonPressed = this.physicalKeyboard.getSimpleKeyboardLayoutKey(event);
+    console.log(buttonPressed);
+    this.dispatch(instance => {
+      let buttonDOM = instance.getButtonElement(`{${buttonPressed}}`);
+      if (buttonDOM) {
+        this.handleButtonClicked("{" + buttonPressed + "}");
+      } else {
+        this.handleButtonClicked(buttonPressed);
+      }
+    });
+    // this.handleButtonClicked("{" + buttonPressed + "}");
+
     if (this.options.physicalKeyboardHighlight) {
       this.physicalKeyboard.handleHighlightKeyDown(event);
     }
