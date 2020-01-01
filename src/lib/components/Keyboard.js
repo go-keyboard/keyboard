@@ -149,6 +149,7 @@ class SimpleKeyboard {
       getOptions: this.getOptions
     });
 
+    this.mapPressKey = {};
     /**
      * Rendering keyboard
      */
@@ -188,6 +189,8 @@ class SimpleKeyboard {
      */
     if (typeof this.options.onKeyPress === "function")
       this.options.onKeyPress(button);
+
+    this.mapPressKey[button] = true;
 
     if (!this.input[this.options.inputName])
       this.input[this.options.inputName] = "";
@@ -316,6 +319,8 @@ class SimpleKeyboard {
      */
     if (button && typeof this.options.onKeyReleased === "function")
       this.options.onKeyReleased(button);
+
+    this.mapPressKey[button] = false;
   }
 
   /**
@@ -432,6 +437,13 @@ class SimpleKeyboard {
      * Rendering
      */
     this.render();
+
+    // 配置变化重新绘制
+    Object.keys(this.mapPressKey).forEach(key => {
+      if (this.mapPressKey[key] === true) {
+        this.physicalKeyboard.handleHighlightButton(key);
+      }
+    });
   }
 
   /**

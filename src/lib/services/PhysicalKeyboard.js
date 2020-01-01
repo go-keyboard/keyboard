@@ -38,6 +38,22 @@ class PhysicalKeyboard {
     });
   }
 
+  handleHighlightButton(buttonPressed) {
+    let options = this.getOptions();
+    this.dispatch(instance => {
+      let buttonDOM =
+        instance.getButtonElement(buttonPressed) ||
+        instance.getButtonElement(`{${buttonPressed}}`);
+
+      if (buttonDOM) {
+        buttonDOM.style.backgroundColor =
+          options.physicalKeyboardHighlightBgColor || "#9ab4d0";
+        buttonDOM.style.color =
+          options.physicalKeyboardHighlightTextColor || "white";
+      }
+    });
+  }
+
   handleHighlightKeyUp(event) {
     let buttonPressed = this.getSimpleKeyboardLayoutKey(event);
 
